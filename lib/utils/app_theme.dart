@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  ThemeData lightPalette() {
+  static ThemeData get lightPalette {
     return ThemeData(
       brightness: Brightness.light,
       scaffoldBackgroundColor: const Color(0xfff1f2f2),
@@ -14,7 +14,7 @@ class AppTheme {
     );
   }
 
-  ThemeData darkPalette() {
+  static ThemeData get darkPalette {
     return ThemeData(
       brightness: Brightness.dark,
       fontFamily: GoogleFonts.montserrat().fontFamily,

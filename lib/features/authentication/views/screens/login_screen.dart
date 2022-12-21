@@ -1,4 +1,4 @@
-import 'package:chatter_box/features/authentication/views/screens/register_screen.dart';
+import 'package:chatter_box/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -129,11 +129,15 @@ class LoginScreen extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const RegisterScreen(),
+            //   ),
+            // );
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                builder: (context) => const RegisterScreen(),
-              ),
+              AppRoutes.registerScreen,
             );
           },
           child: Text(
