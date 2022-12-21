@@ -15,7 +15,7 @@ class AppInput extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.grey.shade200,
+        color: Theme.of(context).colorScheme.background,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 15.0,

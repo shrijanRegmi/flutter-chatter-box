@@ -14,7 +14,7 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onPressed,
-      color: Colors.deepPurple,
+      color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(18.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),

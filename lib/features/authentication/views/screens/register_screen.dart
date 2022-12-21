@@ -19,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _headerBuilder(),
+                    _headerBuilder(context),
                     const SizedBox(
                       height: 30.0,
                     ),
@@ -45,12 +45,12 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _headerBuilder() {
+  Widget _headerBuilder(final BuildContext context) {
     return Column(
       children: [
         SvgPicture.asset(
           'assets/svgs/auth.svg',
-          color: Colors.deepPurple,
+          color: Theme.of(context).colorScheme.primary,
         ),
         const SizedBox(
           height: 20.0,
@@ -125,10 +125,10 @@ class RegisterScreen extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Text(
+          child: Text(
             'Login Now',
             style: TextStyle(
-              color: Colors.deepPurple,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),

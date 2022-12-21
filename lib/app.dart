@@ -1,5 +1,5 @@
+import 'package:chatter_box/utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'features/authentication/views/screens/login_screen.dart';
 
@@ -10,9 +10,8 @@ class ChatterBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chatter Box',
-      theme: ThemeData(
-        fontFamily: GoogleFonts.montserrat().fontFamily,
-      ),
+      theme: AppTheme().lightPalette(),
+      darkTheme: AppTheme().darkPalette(),
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
     );

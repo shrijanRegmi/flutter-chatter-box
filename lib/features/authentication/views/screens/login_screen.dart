@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _headerBuilder(),
+                    _headerBuilder(context),
                     const SizedBox(
                       height: 30.0,
                     ),
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _forgetPasswordBuilder(),
+                    _forgetPasswordBuilder(context),
                   ],
                 ),
               ),
@@ -47,12 +47,12 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _headerBuilder() {
+  Widget _headerBuilder(final BuildContext context) {
     return Column(
       children: [
         SvgPicture.asset(
           'assets/svgs/auth.svg',
-          color: Colors.deepPurple,
+          color: Theme.of(context).colorScheme.primary,
         ),
         const SizedBox(
           height: 20.0,
@@ -107,11 +107,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _forgetPasswordBuilder() {
-    return const Text(
+  Widget _forgetPasswordBuilder(final BuildContext context) {
+    return Text(
       'Forgot Password?',
       style: TextStyle(
-        color: Colors.deepPurple,
+        color: Theme.of(context).colorScheme.primary,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -136,10 +136,10 @@ class LoginScreen extends StatelessWidget {
               ),
             );
           },
-          child: const Text(
+          child: Text(
             'Register Now',
             style: TextStyle(
-              color: Colors.deepPurple,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
