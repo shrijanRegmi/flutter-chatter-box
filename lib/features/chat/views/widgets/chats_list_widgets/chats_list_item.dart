@@ -1,4 +1,5 @@
 import 'package:chatter_box/features/shared/views/widgets/avatar_builder.dart';
+import 'package:chatter_box/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class ChatsListItem extends StatelessWidget {
@@ -6,28 +7,37 @@ class ChatsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              const AvatarBuilder(
-                imgUrl:
-                    'https://s3.amazonaws.com/arc-authors/washpost/50eda441-600e-4fa5-9f0d-6cb1714ac367.png',
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              _bodyBuilder(),
-            ],
-          ),
-          const SizedBox(
-            width: 10.0,
-          ),
-          _counterBuilder(),
-        ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRoutes.chatConvoScreen,
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const AvatarBuilder(
+                  imgUrl:
+                      'https://s3.amazonaws.com/arc-authors/washpost/50eda441-600e-4fa5-9f0d-6cb1714ac367.png',
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                _bodyBuilder(),
+              ],
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            _counterBuilder(context),
+          ],
+        ),
       ),
     );
   }
@@ -57,11 +67,11 @@ class ChatsListItem extends StatelessWidget {
     );
   }
 
-  Widget _counterBuilder() {
+  Widget _counterBuilder(final BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: const Text(
