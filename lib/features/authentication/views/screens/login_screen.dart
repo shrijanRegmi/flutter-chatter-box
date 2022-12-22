@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30.0,
                     ),
-                    _loginButtonBuilder(),
+                    _loginButtonBuilder(context),
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -94,13 +94,18 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _loginButtonBuilder() {
+  Widget _loginButtonBuilder(final BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: AppButton(
             value: 'Login',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                AppRoutes.chatsListScreen,
+              );
+            },
           ),
         ),
       ],
