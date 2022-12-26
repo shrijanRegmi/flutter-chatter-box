@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
     return ChangeNotifierProvider<AuthVm>(
       create: (context) => AuthVm(),
       builder: (context, child) {
-        final authVm = Provider.of<AuthVm>(context);
+        final vm = Provider.of<AuthVm>(context);
 
         return Scaffold(
           body: Center(
@@ -31,11 +31,11 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 30.0,
                         ),
-                        _inputsBuilder(authVm),
+                        _inputsBuilder(vm),
                         const SizedBox(
                           height: 30.0,
                         ),
-                        _loginButtonBuilder(context, authVm),
+                        _loginButtonBuilder(context, vm),
                         const SizedBox(
                           height: 20.0,
                         ),
