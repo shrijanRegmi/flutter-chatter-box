@@ -1,3 +1,4 @@
+import 'package:chatter_box/features/authentication/services/auth_service.dart';
 import 'package:chatter_box/features/shared/views/widgets/app_input.dart';
 import 'package:flutter/material.dart';
 
@@ -18,16 +19,28 @@ class ChatsListScreen extends StatelessWidget {
   }
 
   Widget _searchBuilder() {
-    return const SafeArea(
+    return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 10.0,
           right: 10.0,
           top: 10.0,
           bottom: 5.0,
         ),
-        child: AppInput(
-          hintText: 'Search Users...',
+        child: Row(
+          children: [
+            const Expanded(
+              child: AppInput(
+                hintText: 'Search Users...',
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AuthService.logoutUser();
+              },
+              icon: const Icon(Icons.logout_rounded),
+            ),
+          ],
         ),
       ),
     );

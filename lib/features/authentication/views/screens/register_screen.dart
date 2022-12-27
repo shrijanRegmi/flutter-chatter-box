@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AuthVm>(
-      create: (context) => AuthVm(),
+      create: (context) => AuthVm(context: context),
       builder: (context, child) {
         final vm = Provider.of<AuthVm>(context);
 
@@ -20,32 +20,37 @@ class RegisterScreen extends StatelessWidget {
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _headerBuilder(context),
-                        const SizedBox(
-                          height: 30.0,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _headerBuilder(context),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                            _inputsBuilder(vm),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                            _loginButtonBuilder(vm),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                          ],
                         ),
-                        _inputsBuilder(vm),
-                        const SizedBox(
-                          height: 30.0,
-                        ),
-                        _loginButtonBuilder(vm),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      _registerBuilder(context),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  _registerBuilder(context),
-                ],
+                ),
               ),
             ),
           ),

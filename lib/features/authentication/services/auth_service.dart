@@ -1,14 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
+  static final _auth = FirebaseAuth.instance;
+
   // register user with email and pass
   static Future<String?> registerUser({
     required final String email,
     required final String password,
   }) async {
     try {
-      final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -38,7 +41,7 @@ class AuthService {
     required final String password,
   }) async {
     try {
-      final result = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -60,5 +63,20 @@ class AuthService {
       }
       return null;
     }
+  }
+
+  // logout user
+  static void logoutUser() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('Error!!!: Logging out');
+    }
+  }
+
+  // check if user is already authenticated or not
+  static Stream<User?> checkAuthState() {
+    return _auth.authStateChanges();
   }
 }

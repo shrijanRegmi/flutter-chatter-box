@@ -2,6 +2,12 @@ import 'package:chatter_box/features/authentication/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthVm extends ChangeNotifier {
+  final BuildContext context;
+
+  AuthVm({
+    required this.context,
+  });
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -11,24 +17,16 @@ class AuthVm extends ChangeNotifier {
   TextEditingController get passwordController => _passwordController;
 
   void login() async {
-    final uid = await AuthService.loginUser(
+    await AuthService.loginUser(
       email: _emailController.text,
       password: _passwordController.text,
     );
-
-    if (uid != null) {
-      // navigate to home screen
-    }
   }
 
   void registerUser() async {
-    final uid = await AuthService.registerUser(
+    await AuthService.registerUser(
       email: _emailController.text,
       password: _passwordController.text,
     );
-
-    if (uid != null) {
-      // navigate to home screen
-    }
   }
 }
