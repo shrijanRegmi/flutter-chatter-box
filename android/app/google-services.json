@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "519678215137",
+    "project_id": "chatter-box-a2e52",
+    "storage_bucket": "chatter-box-a2e52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519678215137:android:1d2aee05e07f201e2248a0",
+        "android_client_info": {
+          "package_name": "com.example.chatter_box"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519678215137-npp5t1b72nb6cujso933je2toahi44me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnteV7hlBt46ht5D_VosYe5KT185qscEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519678215137-npp5t1b72nb6cujso933je2toahi44me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

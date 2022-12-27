@@ -1,5 +1,7 @@
+import 'package:chatter_box/features/authentication/viewmodels/auth_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../shared/views/widgets/app_button.dart';
 import '../../../shared/views/widgets/app_input.dart';
@@ -9,39 +11,46 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _headerBuilder(context),
-                    const SizedBox(
-                      height: 30.0,
+    return ChangeNotifierProvider<AuthVm>(
+      create: (context) => AuthVm(),
+      builder: (context, child) {
+        final vm = Provider.of<AuthVm>(context);
+
+        return Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _headerBuilder(context),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
+                        _inputsBuilder(vm),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
+                        _loginButtonBuilder(vm),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                      ],
                     ),
-                    _inputsBuilder(),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    _loginButtonBuilder(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  _registerBuilder(context),
+                ],
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              _registerBuilder(context),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -75,36 +84,41 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _inputsBuilder() {
+  Widget _inputsBuilder(final AuthVm vm) {
     return Column(
-      children: const [
+      children: [
         AppInput(
           hintText: 'Name',
+          controller: vm.nameController,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         AppInput(
           hintText: 'Email',
+          controller: vm.emailController,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         AppInput(
           hintText: 'Password',
           isPassword: true,
+          controller: vm.passwordController,
         ),
       ],
     );
   }
 
-  Widget _loginButtonBuilder() {
+  Widget _loginButtonBuilder(final AuthVm vm) {
     return Row(
       children: [
         Expanded(
           child: AppButton(
             value: 'Register',
-            onPressed: () {},
+            onPressed: () {
+              vm.registerUser();
+            },
           ),
         ),
       ],
