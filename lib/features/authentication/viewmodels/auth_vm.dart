@@ -24,9 +24,15 @@ class AuthVm extends ChangeNotifier {
   }
 
   void registerUser() async {
-    await AuthService.registerUser(
+    final uid = await AuthService.registerUser(
+      name: _nameController.text,
       email: _emailController.text,
       password: _passwordController.text,
     );
+
+    if (uid != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    }
   }
 }

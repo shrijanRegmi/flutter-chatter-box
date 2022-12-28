@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
   static final _auth = FirebaseAuth.instance;
+  static final _fs = FirebaseFirestore.instance;
 
   // register user with email and pass
   static Future<String?> registerUser({
+    required final String name,
     required final String email,
     required final String password,
   }) async {
@@ -15,6 +18,14 @@ class AuthService {
         email: email,
         password: password,
       );
+
+      if (result.user?.uid != null) {
+        saveUserDetailsToFirestore(
+          uid: result.user!.uid,
+          name: name,
+          email: email,
+        );
+      }
 
       return result.user?.uid;
     } on FirebaseAuthException catch (e) {
@@ -72,6 +83,26 @@ class AuthService {
     } catch (e) {
       debugPrint(e.toString());
       debugPrint('Error!!!: Logging out');
+    }
+  }
+
+  // save user details to firestore
+  static Future<void> saveUserDetailsToFirestore({
+    required final String uid,
+    required final String name,
+    required final String email,
+  }) async {
+    try {
+      final usersRef = _fs.collection('users').doc(uid);
+      await usersRef.set({
+        'uid': uid,
+        'name': name,
+        'email': email,
+        'created_at': Timestamp.now(),
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('Error!!!: Saving user details to firestore');
     }
   }
 
