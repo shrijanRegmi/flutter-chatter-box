@@ -1,15 +1,13 @@
-import 'dart:io';
-
 class Message {
-  final String id;
+  String? id;
   final String senderId;
   final List<String> receiverIds;
   final String text;
-  final List<File> files;
+  final List<String> files;
   final int createdAt;
 
   Message({
-    required this.id,
+    this.id,
     required this.senderId,
     required this.receiverIds,
     required this.text,

@@ -1,10 +1,14 @@
+import 'package:chatter_box/features/chat/models/message_model.dart';
 import 'package:chatter_box/features/shared/views/widgets/avatar_builder.dart';
 import 'package:flutter/material.dart';
 
 class MessagesListItem extends StatelessWidget {
+  final Message message;
   final bool isMyMessage;
+
   const MessagesListItem({
     super.key,
+    required this.message,
     required this.isMyMessage,
   });
 
@@ -53,7 +57,7 @@ class MessagesListItem extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(10.0),
       child: Text(
-        'This is my message. I like writing long messages.',
+        message.text,
         style: TextStyle(
           color: isMyMessage ? primaryColor : Colors.white,
           fontWeight: FontWeight.bold,

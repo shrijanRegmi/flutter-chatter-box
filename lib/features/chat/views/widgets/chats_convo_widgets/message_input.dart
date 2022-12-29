@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MessageInput extends StatelessWidget {
-  const MessageInput({super.key});
+  final TextEditingController controller;
+  final Function() onPressedSend;
+
+  const MessageInput({
+    super.key,
+    required this.controller,
+    required this.onPressedSend,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,7 @@ class MessageInput extends StatelessWidget {
           ),
           Expanded(
             child: TextFormField(
+              controller: controller,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Type something awesome...',
@@ -32,8 +40,12 @@ class MessageInput extends StatelessWidget {
           const SizedBox(
             width: 10.0,
           ),
-          const Icon(
-            Icons.send,
+          GestureDetector(
+            onTap: onPressedSend,
+            behavior: HitTestBehavior.opaque,
+            child: const Icon(
+              Icons.send,
+            ),
           ),
         ],
       ),
