@@ -33,6 +33,10 @@ class RegisterScreen extends StatelessWidget {
                             const SizedBox(
                               height: 30.0,
                             ),
+                            _imageBuilder(vm),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
                             _inputsBuilder(vm),
                             const SizedBox(
                               height: 30.0,
@@ -86,6 +90,36 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _imageBuilder(final AuthVm vm) {
+    return GestureDetector(
+      onTap: () {
+        vm.pickImage();
+      },
+      child: Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey.shade300,
+          image: vm.photo == null
+              ? null
+              : DecorationImage(
+                  image: FileImage(vm.photo!),
+                  fit: BoxFit.cover,
+                ),
+        ),
+        child: vm.photo != null
+            ? null
+            : const Center(
+                child: Icon(
+                  Icons.image_rounded,
+                  color: Colors.grey,
+                ),
+              ),
+      ),
     );
   }
 
