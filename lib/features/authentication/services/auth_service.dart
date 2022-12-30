@@ -12,7 +12,7 @@ class AuthService {
     required final String name,
     required final String email,
     required final String password,
-    required final String photo,
+    required final String? photo,
   }) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
@@ -93,7 +93,7 @@ class AuthService {
     required final String uid,
     required final String name,
     required final String email,
-    required final String photo,
+    required final String? photo,
   }) async {
     try {
       final usersRef = _fs.collection('users').doc(uid);

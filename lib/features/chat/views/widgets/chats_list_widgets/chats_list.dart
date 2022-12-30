@@ -1,15 +1,23 @@
+import 'package:chatter_box/features/chat/models/chat_model.dart';
 import 'package:chatter_box/features/chat/views/widgets/chats_list_widgets/chats_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ChatsList extends StatelessWidget {
-  const ChatsList({super.key});
+  final List<Chat> chats;
+  const ChatsList({
+    super.key,
+    required this.chats,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      itemCount: chats.length,
       itemBuilder: (context, index) {
-        return const ChatsListItem();
+        final chat = chats[index];
+        return ChatsListItem(
+          chat: chat,
+        );
       },
     );
   }

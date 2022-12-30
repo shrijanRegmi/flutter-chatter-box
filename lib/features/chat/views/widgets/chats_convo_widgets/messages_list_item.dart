@@ -1,19 +1,25 @@
 import 'package:chatter_box/features/chat/models/message_model.dart';
 import 'package:chatter_box/features/shared/views/widgets/avatar_builder.dart';
+import 'package:chatter_box/features/user/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MessagesListItem extends StatelessWidget {
   final Message message;
   final bool isMyMessage;
+  final AppUser user;
 
   const MessagesListItem({
     super.key,
     required this.message,
     required this.isMyMessage,
+    required this.user,
   });
 
   @override
   Widget build(BuildContext context) {
+    final appUser = Provider.of<AppUser?>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10.0,
@@ -23,9 +29,8 @@ class MessagesListItem extends StatelessWidget {
         crossAxisAlignment:
             isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          const AvatarBuilder(
-            imgUrl:
-                'https://cdn.shopify.com/s/files/1/0850/2114/files/tips_to_help_heighten_senses_480x480.png?v=1624399167',
+          AvatarBuilder(
+            imgUrl: isMyMessage ? appUser!.photo : user.photo,
           ),
           const SizedBox(
             height: 10.0,

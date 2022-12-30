@@ -1,67 +1,116 @@
+import 'package:chatter_box/features/chat/models/chat_model.dart';
+import 'package:chatter_box/features/chat/services/chat_service.dart';
+import 'package:chatter_box/features/chat/views/screens/chat_convo_screen.dart';
 import 'package:chatter_box/features/shared/views/widgets/avatar_builder.dart';
+import 'package:chatter_box/features/user/models/user_model.dart';
+import 'package:chatter_box/features/user/services/user_service.dart';
 import 'package:chatter_box/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatsListItem extends StatelessWidget {
-  const ChatsListItem({super.key});
+  final Chat chat;
+  const ChatsListItem({
+    super.key,
+    required this.chat,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          AppRoutes.chatConvoScreen,
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const AvatarBuilder(
-                  imgUrl:
-                      'https://s3.amazonaws.com/arc-authors/washpost/50eda441-600e-4fa5-9f0d-6cb1714ac367.png',
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                _bodyBuilder(),
-              ],
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            _counterBuilder(context),
-          ],
-        ),
+    final appUser = Provider.of<AppUser?>(context);
+
+    final userIds = chat.userIds;
+    final userId = userIds.firstWhere((element) => element != appUser?.id);
+
+    return StreamBuilder(
+      stream: UserService.getUserFromFirestore(
+        uid: userId,
       ),
+      builder: (context, snap) {
+        if (snap.hasData) {
+          final user = snap.data;
+
+          if (user != null) {
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.chatConvoScreen,
+                  arguments: ChatConvoScreenArgs(user: user),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        AvatarBuilder(
+                          imgUrl: user.photo,
+                        ),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        _bodyBuilder(user),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    _counterBuilder(context),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
-  Widget _bodyBuilder() {
+  Widget _bodyBuilder(final AppUser user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
-          'Lana Smith',
-          style: TextStyle(
+          user.name,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16.0,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5.0,
         ),
-        Text(
-          'I am doing my homework. Something..',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12.0,
+        StreamBuilder(
+          stream: ChatService.message(
+            messageId: chat.lastMessageId,
           ),
+          builder: (context, snap) {
+            if (snap.hasData) {
+              final message = snap.data;
+
+              if (message != null) {
+                return Text(
+                  message.text,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            } else {
+              return Container();
+            }
+          },
         ),
       ],
     );

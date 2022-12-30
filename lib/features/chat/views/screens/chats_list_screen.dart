@@ -1,4 +1,5 @@
 import 'package:chatter_box/features/authentication/services/auth_service.dart';
+import 'package:chatter_box/features/chat/services/chat_service.dart';
 import 'package:chatter_box/features/shared/views/widgets/app_input.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,24 @@ class ChatsListScreen extends StatelessWidget {
         preferredSize: const Size.fromHeight(80.0),
         child: _searchBuilder(),
       ),
-      body: const ChatsList(),
+      body: StreamBuilder(
+        stream: ChatService.chatsList(),
+        builder: (context, snap) {
+          if (snap.hasData) {
+            final chats = snap.data;
+
+            if (chats != null) {
+              return ChatsList(
+                chats: chats,
+              );
+            } else {
+              return Container();
+            }
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 

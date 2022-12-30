@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chatter_box/features/authentication/services/auth_service.dart';
+import 'package:chatter_box/features/shared/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -30,13 +31,18 @@ class AuthVm extends ChangeNotifier {
 
   void registerUser() async {
     // upload photo to firebase storage
+    String? url;
+
+    if (_photo != null) {
+      url = await StorageService.uploadFile(file: _photo!);
+    }
 
     // register user
     final uid = await AuthService.registerUser(
       name: _nameController.text,
       email: _emailController.text,
       password: _passwordController.text,
-      photo: 'photo_url_from_firebase_storage',
+      photo: url,
     );
 
     if (uid != null) {

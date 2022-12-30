@@ -19,7 +19,14 @@ class AppRouter {
       case AppRoutes.chatsListScreen:
         return _buildRoute(settings, const ChatsListScreen());
       case AppRoutes.chatConvoScreen:
-        return _buildRoute(settings, const ChatConvoScreen());
+        final argument = settings.arguments as ChatConvoScreenArgs;
+
+        return _buildRoute(
+          settings,
+          ChatConvoScreen(
+            user: argument.user,
+          ),
+        );
       default:
         return _buildRoute(settings, const LoginScreen());
     }
