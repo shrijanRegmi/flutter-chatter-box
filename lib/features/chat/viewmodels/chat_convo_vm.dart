@@ -21,7 +21,6 @@ class ChatConvoVm extends ChangeNotifier {
     ChatService.sendMessage(
       message: message,
     );
-
     _messageController.text = '';
   }
 }
