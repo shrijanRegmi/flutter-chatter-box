@@ -25,6 +25,7 @@ class AppRouter {
           settings,
           ChatConvoScreen(
             user: argument.user,
+            chatId: argument.chatId,
           ),
         );
       default:

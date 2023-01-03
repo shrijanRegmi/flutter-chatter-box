@@ -11,20 +11,24 @@ class ChatConvoVm extends ChangeNotifier {
 
   // send message
   void sendMessage({
+    final String? chatId,
     required final AppUser? appUser,
     required final AppUser? user,
   }) {
-    final message = Message(
-      senderId: appUser!.id,
-      receiverIds: [user!.id],
-      text: _messageController.text,
-      files: [],
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-    );
+    if (_messageController.text != '') {
+      final message = Message(
+        senderId: appUser!.id,
+        receiverIds: [user!.id],
+        text: _messageController.text,
+        files: [],
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      );
 
-    ChatService.sendMessage(
-      message: message,
-    );
-    _messageController.text = '';
+      ChatService.sendMessage(
+        chatId: chatId,
+        message: message,
+      );
+      _messageController.text = '';
+    }
   }
 }

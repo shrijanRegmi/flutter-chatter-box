@@ -8,12 +8,13 @@ class ChatService {
 
   // send message to receivers
   static void sendMessage({
+    final String? chatId,
     required final Message message,
   }) async {
     try {
       final currentTime = DateTime.now().millisecondsSinceEpoch;
 
-      final chatRef = _fs.collection('chats').doc('text_chat_id');
+      final chatRef = _fs.collection('chats').doc(chatId);
       final messageRef = chatRef.collection('messages').doc();
 
       message.id = messageRef.id;
@@ -55,10 +56,12 @@ class ChatService {
   }
 
   // create stream of messages collection
-  static Stream<List<Message>> messagesList() {
+  static Stream<List<Message>> messagesList({
+    required final String chatId,
+  }) {
     return _fs
         .collection('chats')
-        .doc('text_chat_id')
+        .doc(chatId)
         .collection('messages')
         .orderBy('created_at', descending: true)
         .snapshots()
@@ -119,10 +122,13 @@ class ChatService {
   }
 
   // create stream of message
-  static Stream<Message?> message({required final String messageId}) {
+  static Stream<Message?> message({
+    required final String chatId,
+    required final String messageId,
+  }) {
     return _fs
         .collection('chats')
-        .doc('text_chat_id')
+        .doc(chatId)
         .collection('messages')
         .doc(messageId)
         .snapshots()

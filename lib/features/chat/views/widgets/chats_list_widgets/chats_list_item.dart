@@ -37,7 +37,10 @@ class ChatsListItem extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   AppRoutes.chatConvoScreen,
-                  arguments: ChatConvoScreenArgs(user: user),
+                  arguments: ChatConvoScreenArgs(
+                    user: user,
+                    chatId: chat.id,
+                  ),
                 );
               },
               child: Padding(
@@ -90,6 +93,7 @@ class ChatsListItem extends StatelessWidget {
         ),
         StreamBuilder(
           stream: ChatService.message(
+            chatId: chat.id,
             messageId: chat.lastMessageId,
           ),
           builder: (context, snap) {

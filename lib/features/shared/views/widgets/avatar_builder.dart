@@ -16,12 +16,15 @@ class AvatarBuilder extends StatelessWidget {
       height: 50.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(
-            imgUrl,
-          ),
-          fit: BoxFit.cover,
-        ),
+        color: Colors.grey.shade300,
+        image: imgUrl == ""
+            ? null
+            : DecorationImage(
+                image: CachedNetworkImageProvider(
+                  imgUrl,
+                ),
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }

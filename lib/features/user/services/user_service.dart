@@ -22,4 +22,29 @@ class UserService {
       }
     });
   }
+
+  static Stream<List<AppUser>> getUsersByName({required final String name}) {
+    return _fs
+        .collection('users')
+        .where('name', isEqualTo: name)
+        .snapshots()
+        .map((usersSnap) {
+      final List<AppUser> users = [];
+
+      final documents = usersSnap.docs;
+      for (final document in documents) {
+        final data = document.data();
+        final appUser = AppUser(
+          id: data['uid'],
+          name: data['name'],
+          email: data['email'],
+          photo: data['photo'] ?? '',
+        );
+
+        users.add(appUser);
+      }
+
+      return users;
+    });
+  }
 }

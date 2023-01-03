@@ -1,4 +1,6 @@
 import 'package:chatter_box/features/authentication/services/auth_service.dart';
+import 'package:chatter_box/features/chat/models/chat_model.dart';
+import 'package:chatter_box/features/chat/services/chat_service.dart';
 import 'package:chatter_box/features/user/models/user_model.dart';
 import 'package:chatter_box/features/user/services/user_service.dart';
 import 'package:chatter_box/utils/app_router.dart';
@@ -24,6 +26,7 @@ class ChatterBox extends StatelessWidget {
         final authState = Provider.of<User?>(context);
 
         if (authState == null) {
+          // when user is not loggged in
           return MaterialApp(
             title: 'Chatter Box',
             debugShowCheckedModeBanner: false,
@@ -33,10 +36,20 @@ class ChatterBox extends StatelessWidget {
             onGenerateRoute: AppRouter.onGenerateRoute,
           );
         } else {
-          return StreamProvider<AppUser?>(
-            create: (context) =>
-                UserService.getUserFromFirestore(uid: authState.uid),
-            initialData: null,
+          // when user is loggged in
+          return MultiProvider(
+            providers: [
+              StreamProvider<AppUser?>(
+                create: (context) => UserService.getUserFromFirestore(
+                  uid: authState.uid,
+                ),
+                initialData: null,
+              ),
+              StreamProvider<List<Chat>?>(
+                create: (context) => ChatService.chatsList(),
+                initialData: const [],
+              ),
+            ],
             builder: (context, child) {
               return MaterialApp(
                 title: 'Chatter Box',

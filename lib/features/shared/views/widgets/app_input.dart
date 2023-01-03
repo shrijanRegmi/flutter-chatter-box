@@ -4,12 +4,14 @@ class AppInput extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
   final bool isPassword;
+  final Function(String)? onChanged;
 
   const AppInput({
     super.key,
     required this.hintText,
     this.controller,
     this.isPassword = false,
+    this.onChanged,
   });
 
   @override
@@ -33,6 +35,11 @@ class AppInput extends StatelessWidget {
           border: InputBorder.none,
           hintText: hintText,
         ),
+        onChanged: (val) {
+          if (onChanged != null) {
+            onChanged!(val);
+          }
+        },
       ),
     );
   }
